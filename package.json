@@ -1,11 +1,14 @@
 {
 	"dependencies": {
 		"@aws-sdk/client-sqs": "^3.985.0",
+		"aws-lambda": "^1.0.7",
 		"sst": "^3.17.38",
 		"zod": "^4.3.6"
 	},
 	"devDependencies": {
+		"@types/aws-lambda": "^8.10.160",
 		"@types/node": "^25.2.2",
+		"import": "^0.0.6",
 		"typescript": "^5.9.3"
 	}
 }

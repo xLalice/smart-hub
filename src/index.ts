@@ -5,7 +5,6 @@ import { Resource } from "sst";
 const sqs = new SQSClient({});
 
 export const handler = async (event: any) => {
-    console.log("Event received:", event);
     if (!event.body) {
         return {
             statusCode: 400,
