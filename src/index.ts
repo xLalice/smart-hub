@@ -1,4 +1,8 @@
-import {  IssueEventSchema } from "./schemas";
+import { IssueEventSchema } from "./schemas";
+import { SQSClient, SendMessageCommand } from "@aws-sdk/client-sqs";
+import { Resource } from "sst";
+
+const sqs = new SQSClient({});
 
 export const handler = async (event: any) => {
     console.log("Event received:", event);
@@ -36,6 +40,21 @@ export const handler = async (event: any) => {
     }
 
     const validEvent = parsedEvent.data;
+
+    try {
+        const command = new SendMessageCommand({
+            QueueUrl: (Resource as any).MyQueue.url,
+
+            MessageBody: JSON.stringify(validEvent),
+        });
+
+        await sqs.send(command);
+
+        console.log("Sent to queue successfully");
+    } catch (error) {
+        console.error("Failed to queue message:", error);
+        return { statusCode: 500, body: "Internal Server Error" };
+    }
 
     return {
         statusCode: 200,

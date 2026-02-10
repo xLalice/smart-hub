@@ -1,5 +1,7 @@
 /// <reference path="./.sst/platform/config.d.ts" />
 
+import { Secret } from "./.sst/platform/src/components";
+
 export default $config({
   app(input) {
     return {
@@ -9,22 +11,30 @@ export default $config({
       home: "aws",
       providers: {
         aws: {
-          region: "ap-southeast-1", 
+          region: "ap-southeast-1",
         }
       }
     };
   },
   async run() {
+    const secret = new sst.Secret("DiscordWebhookUrl");
+
+    const queue = new sst.aws.Queue("MyQueue");
+
+    queue.subscribe({
+      handler: "src/consumer.handler",
+      link: [secret], 
+    });
+
     const api = new sst.aws.Function("MyApi", {
-      url: {
-        authorization: "none", 
-        cors: true,
-      },                 
-      handler: "index.handler",  
+      url: { authorization: "none", cors: true },
+      handler: "src/index.handler",
+      link: [queue], 
     });
 
     return {
       api: api.url,
+      queue: queue.url,
     };
   },
 });

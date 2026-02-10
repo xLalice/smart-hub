@@ -1,5 +1,11 @@
 {
 	"dependencies": {
+		"@aws-sdk/client-sqs": "^3.985.0",
+		"sst": "^3.17.38",
 		"zod": "^4.3.6"
+	},
+	"devDependencies": {
+		"@types/node": "^25.2.2",
+		"typescript": "^5.9.3"
 	}
 }

@@ -6,9 +6,17 @@
 
 declare module "sst" {
   export interface Resource {
+    "DiscordWebhookUrl": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
     "MyApi": {
       "name": string
       "type": "sst.aws.Function"
+      "url": string
+    }
+    "MyQueue": {
+      "type": "sst.aws.Queue"
       "url": string
     }
   }

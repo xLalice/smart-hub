@@ -11,7 +11,8 @@ export const IssueEventSchema = z.object({
             login: z.string(),
             id: z.number()
         }),
-        body: z.string().nullable().optional()
+        body: z.string().nullable().optional(),
+        number: z.number()
     }),
     repository: z.object({
         id: z.number(),
